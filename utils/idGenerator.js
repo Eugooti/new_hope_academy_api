@@ -9,6 +9,9 @@ class IdGenerator {
         return Math.floor(Math.random() * (999999 - 100000 + 1) + 100000);
     }
 
+    generateVendorId(){
+        return Math.floor(Math.random() * (99999 - 10000 + 1) + 10000);
+    }
 
 
     /**

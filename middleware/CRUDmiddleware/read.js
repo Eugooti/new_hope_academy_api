@@ -39,11 +39,12 @@ const readDataByLearnerAdmissionNumber = async (model,req,res)=>{
         const admNo = req.params.id;
         const result = await model.findOne({admNo})
         if (!result){
-            return itemNotFound(res)
+            return itemNotFound(res,"Learner data")
         }
         return res.status(200).json({
             success:true,
-            result:result
+            result:result,
+            message:"Learner data found"
         })
 
     }catch (error) {

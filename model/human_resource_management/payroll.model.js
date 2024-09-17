@@ -1,10 +1,15 @@
 const mongoose = require('../../config/DB')
+const {Schema} = mongoose
 
-const payroll = new mongoose.Schema({
-    employeeNumber: {type: Number, required:true},
-    fullName: {type: String, required:true},
-    salary: {type: Number, required:true},
-    accountNumber: {type:Number, required:true,unique:true}
-})
+const payrollSchema = new Schema({
+    employeeId: { type: Schema.Types.ObjectId, ref: 'FinanceStaff', required: true },
+    salary: { type: Number, required: true },
+    accountNo: { type: String, required: true },
+    bonuses: { type: Number, default: 0 },
+    deductions: { type: Number, default: 0 },
+    netPay: { type: Number, default: function() { return this.salary + this.bonuses - this.deductions; } },
+    paidAt: { type: Date, default: Date.now }
+});
 
-module.exports = mongoose.model("Payroll",payroll)
+
+module.exports = mongoose.model("Payroll",payrollSchema)

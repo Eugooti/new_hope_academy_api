@@ -98,5 +98,7 @@ router.route('/auth/login').post(catchErrors(authController.login))
 
 router.route('/auth/logout').get(catchErrors(authController.logout))
 
+router.route('/auth/updatePassword/:id').put(catchErrors(authController.updatePassword))
+
 
 module.exports = router

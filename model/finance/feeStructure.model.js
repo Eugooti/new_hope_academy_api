@@ -7,7 +7,7 @@ const feeItemSchema = new Schema({
     amount: { type: Number, required: true },
     dueDate: { type: Date, required: true },
     isOptional: { type: Boolean, default: false },
-    description: { type: String }
+    description: { type: String,required:true }
 });
 
 const feeStructureSchema = new Schema({
@@ -16,20 +16,20 @@ const feeStructureSchema = new Schema({
     grade: { type: String, required: true },
     feeItems: [feeItemSchema],
     createdDate: { type: Date, default: Date.now },
-    createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    total: { type: Number, default: 0 }
+    createdBy: { type: Number, required: true },
+    total: { type: Number, default: 0 ,required:true}
 });
 
 const studentFeeSchema = new Schema({
-    studentId: { type: Number, required: true },
-    feeStructureId: { feeStructureSchema },
+    admNo: { type: Number, required: true },
+    feeStructure: { feeStructureSchema },
     totalAmount: { type: Number, required: true },
-    paidAmount: { type: Number, required: true, default: 0 },
+    lastPaidAmount: { type: Number, required: true, default: 0 },
     dueAmount: { type: Number, required: true },
-    paymentStatus: { type: String, required: true, enum: ['Pending', 'Partially Paid', 'Paid'], default: 'Pending' },
-    lastPaymentDate: { type: Date },
+    paymentStatus: { type: String, required: true, enum: ['Pending', 'Partially Paid', 'Settled'], default: 'Pending' },
+    lastPaymentDate: { type: String },
     paymentHistory: [{
-        paymentDate: { type: Date, required: true },
+        paymentDate: { type: String, required: true },
         amountPaid: { type: Number, required: true },
         paymentMethod: { type: String, required: true },
         transactionId: { type: String }

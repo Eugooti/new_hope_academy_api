@@ -59,7 +59,7 @@ const validateAndSanitize = (entity) => {
                 body('parents.*.idNo').isString().trim().notEmpty().withMessage('Parent ID number is required'),
                 body('parents.*.phone').isString().trim().notEmpty().withMessage('Parent phone number is required'),
                 body('parents.*.email').optional().isEmail().withMessage('Invalid parent email address'),
-                body('admittedBy').isInt().withMessage('Admitted by must be an integer'),
+                body('admittedBy').isNumeric().withMessage('Admitted by must be an integer'),
             ];
             break;
         case 'maintenanceRequest':

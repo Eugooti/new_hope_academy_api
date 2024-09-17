@@ -7,10 +7,16 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const adminRoutes = require('./routes/admin.router');
 const authRoutes = require('./routes/auth.router');
+const hrRouter = require('./routes/hrm.router')
+const classroomRouter = require('./routes/classroom.router')
+const learnerServiceRouter = require('./routes/learnerServeice.router')
+const financeRouter = require('./routes/learnerServeice.router')
 const {swaggerDocs} = require('./config/swaggerConfig/index');
 const crypto = require('crypto');
 require('dotenv').config();
 const { notFound } = require('./handlers/errorHandlers');
+const { authenticateToken} = require("./config/security/jwtAuthentication");
+const {batchRequestsHandler} = require("./handlers/batchRequests.handler");
 
 const port = process.env.PORT || 4500;
 const generateSecretKey = () => {
@@ -20,7 +26,11 @@ const generateSecretKey = () => {
 const app = express();
 
 mongoose.connection.on('mongodbConnected', () => {
-    app.use(cors());
+    app.use(cors({
+        origin: ['http://localhost:5174','http://localhost:5173'], // Frontend URL
+        methods: ['GET', 'POST', 'DELETE', 'PUT'],
+        credentials: true
+    }));
     app.use(morgan('dev'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,10 +41,16 @@ mongoose.connection.on('mongodbConnected', () => {
         saveUninitialized: false,
     }));
 
-    app.use('/api-docs', swaggerDocs.ui, swaggerDocs.setup);
+    app.use('/nha/api-docs', swaggerDocs.ui, swaggerDocs.setup);
 
     app.use('/nha', authRoutes);
-    app.use('/nha', adminRoutes);
+    app.post('/nha/batch',authenticateToken,batchRequestsHandler)
+    app.use('/nha',authenticateToken, adminRoutes);
+    app.use('/nha',authenticateToken, hrRouter);
+    app.use('/nha',authenticateToken, classroomRouter);
+    app.use('/nha',authenticateToken, learnerServiceRouter);
+    app.use('/nha',authenticateToken, financeRouter);
+
 
 
     app.use(notFound);

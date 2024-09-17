@@ -4,8 +4,8 @@ const {formatDate} = require("../../utils/formatDate");
 const departmentSchema = new mongoose.Schema({
     name: { type: String, required: true, unique: true },
     description: { type: String,required:true },
-    head: { type:String,required:true },
-    createdAt:{type:String,required:true,formatDate},
+    departmentHead: { type:String,required:true },
+    createdAt:{type:String,required:true,default:formatDate},
     createdBy:{type:String,required:true},
 });
 

@@ -15,7 +15,7 @@ const removeTodoItem =async (model,req,res) => {
       if (!index>-1){
           return itemNotFound(res)
       }else if (index >- 1){
-          delete result.reminders[index]
+          result.reminders.splice(index,1)
       }
       const result2 =await result.save()
 

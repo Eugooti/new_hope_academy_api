@@ -3,6 +3,7 @@ const {read,readById,readDataByLearnerAdmissionNumber,readDataByStaffEmployeeNum
 const {create} = require("./create")
 const {remove,removeByLearnerAdmNo,removeByStaffId} = require("./delete")
 
+
 const crudMethods = (model)=>{
     const methods = {};
 

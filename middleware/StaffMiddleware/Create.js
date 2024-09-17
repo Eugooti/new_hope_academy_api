@@ -5,8 +5,6 @@ const { handleErrors } = require('../../handlers/errorHandlers');
 const CreateEmployee = async (model, req, res) => {
     try {
         // Log incoming request body
-        console.log('Incoming request body:', req.body);
-
         const generate = new IdGenerator();
         const { email } = req.body;
 
