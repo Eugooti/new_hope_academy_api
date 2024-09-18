@@ -11,12 +11,12 @@ const hrRouter = require('./routes/hrm.router')
 const classroomRouter = require('./routes/classroom.router')
 const learnerServiceRouter = require('./routes/learnerServeice.router')
 const financeRouter = require('./routes/learnerServeice.router')
+const batchRequest = require('./routes/batchRequest.router')
 const {swaggerDocs} = require('./config/swaggerConfig/index');
 const crypto = require('crypto');
 require('dotenv').config();
 const { notFound } = require('./handlers/errorHandlers');
 const { authenticateToken} = require("./config/security/jwtAuthentication");
-const {batchRequestsHandler} = require("./handlers/batchRequests.handler");
 
 const port = process.env.PORT || 4500;
 const generateSecretKey = () => {
@@ -44,7 +44,7 @@ mongoose.connection.on('mongodbConnected', () => {
     app.use('/nha/api-docs', swaggerDocs.ui, swaggerDocs.setup);
 
     app.use('/nha', authRoutes);
-    app.post('/nha/batch',authenticateToken,batchRequestsHandler)
+    app.use('/nha',authenticateToken,batchRequest)
     app.use('/nha',authenticateToken, adminRoutes);
     app.use('/nha',authenticateToken, hrRouter);
     app.use('/nha',authenticateToken, classroomRouter);

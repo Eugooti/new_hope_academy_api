@@ -9,8 +9,9 @@ const batchRequestsHandler = async (req, res) => {
 
     const responses = [];
 
+
     for (const request of requests) {
-        const { method, url, data } = request;
+        const { method, url, data, headers } = request;
 
         // Validate HTTP method
         if (!['get', 'post', 'put', 'delete'].includes(method.toLowerCase())) {
@@ -20,12 +21,15 @@ const batchRequestsHandler = async (req, res) => {
             });
             continue;
         }
+
         try {
             const response = await axios({
                 method: method.toLowerCase(),
-                url,
-                data
+                url: `http://localhost:4600/nha${url}`, // Append baseURL
+                data,
+                headers,  // Pass the client headers to each individual request
             });
+
             responses.push({ status: response.status, data: response.data });
         } catch (error) {
             responses.push({
