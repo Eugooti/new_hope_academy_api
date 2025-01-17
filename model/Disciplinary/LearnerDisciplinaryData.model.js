@@ -16,7 +16,7 @@ const offence = new mongoose.Schema({
 const LearnerDisciplinaryRecord = new mongoose.Schema({
     admNo:{type:Number,required:true, unique:true},
     fullName:{type:String,required:true},
-    grade:{type:Number,required:true},
+    classroomNo:{type:String,required:true},
     offences:[offence]
 })
 

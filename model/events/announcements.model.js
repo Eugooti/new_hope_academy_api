@@ -7,7 +7,6 @@ const announcementSchema = new mongoose.Schema({
     content: { type: String, required: true },
     createdBy: { type: String, required:true },
     createdAt:{type:String,required:true,default:formatDate},
-    updatedAt: { type: Date, default: formatDate }
 });
 
 module.exports = mongoose.model("announcement",announcementSchema)

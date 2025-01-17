@@ -16,7 +16,7 @@ const Learner = new mongoose.Schema({
     firstName:{type:String,required:true},
     lastName:{type:String,required:true},
     gender:{type:String,required:true},
-    classroom:{type:Number,required:true},
+    classroom:{type:String,required:true},
     yob:{type:String,required:true},
     disability:{type:String,required:true},
     medicalCondition:{type:String,required:true},

@@ -110,7 +110,7 @@ const router = express.Router();
  *       400:
  *         description: Invalid input
  */
-router.route('/learner/create').post( validateAndSanitize("learner"), catchErrors(learnerController.admitLearner));
+router.route('/learner/create').post(catchErrors(learnerController.admitLearner));
 
 
 /**
@@ -156,7 +156,7 @@ router.route('/learners/read').get(catchErrors(learnerController.readAll))
  *       404:
  *         description: Learner not found
  */
-router.route('/learners/readOne/:id').get(validateLearnerId,catchErrors(learnerController.readDataByLearnerAdmissionNumber))
+router.route('/learners/read/:id').get(validateLearnerId,catchErrors(learnerController.readDataByLearnerAdmissionNumber))
 
 /**
  * @swagger
@@ -356,7 +356,7 @@ router.route('/staff/read').get(catchErrors(staffController.readAll))
  *       404:
  *         description: Staff member not found
  */
-router.route('/staff/readOne/:id').get(validateStaffId,catchErrors(staffController.readDataByStaffEmployeeNumber))
+router.route('/staff/read/:id').get(validateStaffId,catchErrors(staffController.readDataByStaffEmployeeNumber))
 
 /**
  * @swagger
@@ -602,7 +602,7 @@ router.route('/events/importantDates/readOne/:id').get(catchErrors(importantDate
 router.route('/events/importantDates/update/:id').put(validateObjectId,catchErrors(importantDatesController.update));
 router.route('/events/importantDates/delete/:id').delete(validateObjectId,catchErrors(importantDatesController.remove));
 
-router.route('/events/reminder/create').post(catchErrors(reminderController.addTodoItem))
+router.route('/events/reminder/create/:id').post(catchErrors(reminderController.addTodoItem))
 router.route('/events/reminder/read').get(catchErrors(reminderController.readAll))
 router.route('/events/reminder/readOne/:id').get(catchErrors(reminderController.readDataByStaffEmployeeNumber))
 router.route('/events/reminder/delete/:id').delete(validateObjectId,catchErrors(reminderController.removeTodoItem));

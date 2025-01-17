@@ -1,40 +1,24 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
+const authenticateToken = (req, res, next) => {
+    const token = req.cookies.authToken;  // Assuming the token is stored in cookies
 
-const generateRefreshToken = (user) => {
-  return  jwt.sign(
-      {user},
-      process.env.REFRESH_TOKEN_SECRET,
-      {expiresIn: '1h'}
-  )
+    if (!token) return res.status(403).json({ message: "No token provided" });
 
-}
+    jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+        if (err) {
+            // Check if the error is due to expiration
+            if (err.name === 'TokenExpiredError') {
+                return res.status(401).json({ message: 'Token expired' });
+            }
 
-const authenticateToken = (req,res,next) => {
-  const token = req.headers.authorization;
-  if (token && token.startsWith('Bearer ')){
-      const jwtToken = token.split(' ')[1];
-      jwt.verify(jwtToken, process.env.SECRET_KEY, (err, decode) => {
-          if (err) {
-              return res.status(401).json({ message: 'Unauthorized!' });
-          }else {
-              req.user = decode
+            return res.status(403).json({ message: 'Invalid token' });
+        }
 
-              // Check if token is expired
-              if (decode.exp <= Date.now() / 1000) {
-                  // Token is expired, send refresh token or require re-authentication
-                  const refreshToken = generateRefreshToken(decode);
-                  return res.status(401).json({
-                      message: 'Token expired',
-                      refreshToken // Optionally send refresh token to client
-                  });
-              }
-              next()
-          }
-      })
-  }
-}
-
+        req.user = user;
+        next();
+    });
+};
 
 module.exports = {authenticateToken};

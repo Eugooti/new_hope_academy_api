@@ -1,5 +1,4 @@
 const express = require('express');
-
 const counsellingSessionController = require('../controllers/adminControllers/learnerServiceControllers/counseling.controller')
 const counsellingAppointmentsController = require('../controllers/adminControllers/learnerServiceControllers/counselingAppointment.controller')
 const clinicController = require('../controllers/adminControllers/learnerServiceControllers/clinic.controller')
@@ -15,6 +14,7 @@ router.route('/learnerService/counseling/session/read').get(catchErrors(counsell
 router.route('/learnerService/counseling/session/addRecord/:id').put(validateLearnerId,catchErrors(counsellingSessionController.counselingSession))
 router.route('/learnerService/counseling/session/read/:id').get(validateLearnerId,catchErrors(counsellingSessionController.readDataByLearnerAdmissionNumber))
 router.route('/learnerService/counseling/session/delete/:id').put(validateLearnerId,catchErrors(counsellingSessionController.removeByLearnerAdmNo))
+router.route('/learnerService/counseling/session/update/:id').put(validateLearnerId,catchErrors(counsellingSessionController.updateByLearner))
 
 router.route('/learnerService/counseling/appointments/create').post(catchErrors(counsellingAppointmentsController.create))
 router.route('/learnerService/counseling/session/read').get(catchErrors(counsellingAppointmentsController.readAll))
@@ -25,7 +25,7 @@ router.route('/learnerService/clinic/create').post(catchErrors(clinicController.
 router.route('/learnerService/clinic/read').get(catchErrors(clinicController.readAll))
 router.route('/learnerService/clinic/readOne/:id').get(validateLearnerId,catchErrors(clinicController.readDataByLearnerAdmissionNumber))
 router.route('/learnerService/clinic/addRecord/:id').put(validateLearnerId,catchErrors(clinicController.addClinicRecord))
-router.route('/learnerService/clinic/update/:id').put(validateLearnerId,catchErrors(clinicController.update))
+router.route('/learnerService/clinic/update/:id').put(validateLearnerId,catchErrors(clinicController.updateByLearner))
 router.route('/learnerService/clinic/delete/:id').put(validateLearnerId,catchErrors(clinicController.remove))
 
 router.route('/learnerService/club/create').post(catchErrors(clubController.create))

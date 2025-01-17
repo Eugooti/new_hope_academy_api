@@ -9,15 +9,20 @@ const attendance = new mongoose.Schema({
 })
 
 const learnerRecord = new mongoose.Schema({
-    admNo:{type:Number,required:true,unique:true},
-    fullName:{type:String,required:true,unique:true},
+    admNo:{type:Number,required:true},
+    fullName:{type:String,required:true},
+    gender:{type:String,required:true},
     attendanceRecord:[attendance]
 })
 
 const classroomAttendanceRecord=new mongoose.Schema({
-    classroomNo:{type:Number,required:true,unique:true},
-    classroomFacilitator:{type:Number,required:true},
-    attendanceRecord:[learnerRecord]
+    classroomNo:{type:String,required:true,unique:true},
+    classroomName:{type:String,required:true,unique:true},
+    classroomFacilitator:{type:String,required:true},
+    employeeNo:{type:Number,required:true},
+    learners:[learnerRecord],
+    createdBy:{type:Number,required:true}
+
 })
 
 module.exports = mongoose.model("classRoomAttendance",classroomAttendanceRecord)

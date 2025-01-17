@@ -1,6 +1,6 @@
 const express = require('express');
 const {catchErrors} = require("../handlers/errorHandlers");
-const {batchRequestsHandler} = require("../handlers/batchRequests.handler");
+const {batchRequestsHandler} = require("../handlers/batchRequestsHandler");
 
 const router = express.Router();
 

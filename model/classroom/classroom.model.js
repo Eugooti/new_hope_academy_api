@@ -7,7 +7,7 @@ const learner = new mongoose.Schema({
 })
 
 const classroom = new mongoose.Schema({
-    classroomNo:{type:Number,required:true,unique:true},
+    classroomNo:{type:String,required:true,unique:true},
     classroomName:{type:String,required:true,unique:true},
     classroomFacilitator:{type:String,required:true},
     employeeNo:{type:Number,required:true},

@@ -7,14 +7,18 @@ const lesson = new mongoose.Schema({
 })
 
 const daySchedule = new mongoose.Schema({
-    day:{type:Number,required:true,unique:true},
+    day:{type:Number,required:true},
     lessons:[lesson]
 })
 
 const timetable = new mongoose.Schema({
-    classroomNo:{type:Number,required:true,unique:true},
+    classroomNo:{type:String,required:true,unique:true},
     classroomName:{type:String,required:true,unique:true},
-    schedule:[daySchedule]
+    classroomFacilitator:{type:String,required:true},
+    employeeNo:{type:Number,required:true},
+    schedule:[daySchedule],
+    createdBy:{type:Number,required:true}
+
 })
 
 module.exports = mongoose.model('classroomTimetable',timetable)

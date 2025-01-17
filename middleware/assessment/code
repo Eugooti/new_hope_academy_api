@@ -1,0 +1,110 @@
+To update learner scores and calculate the subject mean scores and totals after creating the assessment, we need an endpoint that accepts the updated scores and recalculates the relevant fields in the database. Here’s how you can achieve this:
+
+### Steps to Update Learner Scores
+
+1. **Receive Updated Scores**: The API should accept the exam ID, subject name, and an array of learners with their updated scores.
+2. **Find the Exam Document**: Locate the specific exam using the exam ID.
+3. **Update Scores**: Update the learner's marks in the respective subject.
+4. **Recalculate Totals and Mean**: Recompute the `totals` and `meanScore` for the subject.
+5. **Save Changes**: Save the updated document to the database.
+
+### Example Code
+
+```javascript
+const updateLearnerScores = async (model, req, res) => {
+  try {
+    const { examId, subject, updatedScores } = req.body;
+
+    // Find the exam by ID
+    const exam = await model.findById(examId);
+    if (!exam) {
+      return res.status(404).json({
+        success: false,
+        message: "Exam not found",
+      });
+    }
+
+    // Find the subject in the outcome
+    const subjectData = exam.outcome.find((outcome) => outcome.subject === subject);
+    if (!subjectData) {
+      return res.status(404).json({
+        success: false,
+        message: `Subject ${subject} not found in exam`,
+      });
+    }
+
+    // Update learner scores
+    updatedScores.forEach(({ admNo, marks }) => {
+      const learner = subjectData.learners.find((learner) => learner.admNo === admNo);
+      if (learner) {
+        learner.marks = marks;
+      }
+    });
+
+    // Recalculate totals and meanScore
+    subjectData.totals = subjectData.learners.reduce((sum, learner) => sum + learner.marks, 0);
+    subjectData.meanScore = (subjectData.totals / subjectData.learners.length).toFixed(2);
+
+    // Save the updated exam
+    await exam.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Learner scores updated successfully",
+      exam,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred",
+      error: err.message,
+    });
+  }
+};
+
+module.exports = { updateLearnerScores };
+```
+
+### Explanation of the Code
+
+1. **Find Exam**:
+   - Locate the exam by its ID to ensure you're updating the correct record.
+
+2. **Update Learner Scores**:
+   - Iterate through `updatedScores` (received from the request) and match each learner's `admNo` in the `learners` array.
+   - Update the `marks` for the matched learner.
+
+3. **Recalculate Totals and Mean**:
+   - Use `Array.prototype.reduce` to calculate the total marks for all learners.
+   - Compute the mean score as `totals / number of learners`.
+
+4. **Save Exam Document**:
+   - Save the modified exam document to MongoDB to persist the updates.
+
+### Example Request Body
+
+```json
+{
+  "examId": "64f1e3f8e4a8a5c5d9f12345",
+  "subject": "Mathematics",
+  "updatedScores": [
+    { "admNo": "ADM123", "marks": 85 },
+    { "admNo": "ADM124", "marks": 90 },
+    { "admNo": "ADM125", "marks": 78 }
+  ]
+}
+```
+
+### Notes
+
+- **Validation**:
+  - Validate the request payload to ensure `examId`, `subject`, and `updatedScores` are present and correctly formatted.
+
+- **Error Handling**:
+  - Handle cases where `examId` or `subject` doesn't exist gracefully.
+
+- **Optimization**:
+  - If updating multiple subjects at once, you can extend the logic to loop through subjects in the request body.
+
+This approach ensures that scores are updated dynamically while maintaining consistency in the computed totals and mean scores for each subject.

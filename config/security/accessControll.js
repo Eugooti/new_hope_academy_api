@@ -2,7 +2,7 @@ const roles = require('./roles');
 
 function checkPrivilege(requiredPrivileges) {
     return (req, res, next) => {
-        const { roles: userRoles } = req.user; // Extract roles array from req.user
+            const { roles: userRoles } = req.user; // Extract roles array from req.user
 
         if (!userRoles || userRoles.length === 0) {
             return res.status(401).json({ message: 'Unauthorized: No roles provided' });

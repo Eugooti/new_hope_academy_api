@@ -7,6 +7,7 @@ const complaints = new mongoose.Schema({
     complain:{type:String,required:true},
     date:{type:String,required:true,default:formatDate},
     report:{type:String,required:true},
+    resolved:{type:Boolean,required:true,default:false},
     handler:{type:Number,required:true}
 })
 

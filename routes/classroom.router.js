@@ -5,6 +5,8 @@ const classroomTimetableController = require('../controllers/adminControllers/cl
 const learnerAttendance = require('../controllers/adminControllers/classroomControllers/learnerAttendance.controller')
 const {validateAndSanitize} = require("../handlers/Data-Validation");
 const {catchErrors, validateObjectId} = require("../handlers/errorHandlers");
+const assessmentController = require("../controllers/adminControllers/assessmentController/assessment.Controller");
+
 
 const router = express.Router();
 
@@ -220,7 +222,9 @@ router.route('/classroom/delete/:id').delete(validateObjectId,catchErrors(classr
  *       500:
  *         description: server error
  */
-router.route('/classroom/addLearner/:id').put(validateObjectId,catchErrors(classroomController.addLearner))
+router.route('/classroom/addLearner/:id').put(catchErrors(classroomController.addLearner))
+
+router.route('/classroom/transfer/:id').put(catchErrors(classroomController.transferLearner))
 
 /**
  * @swagger
@@ -463,6 +467,8 @@ router.route('/classroom/attendance/create').post(catchErrors(learnerAttendance.
  */
 router.route('/classroom/attendance/read').get(catchErrors(learnerAttendance.readAll))
 
+router.route('/classroom/attendance/addLearner/:id').post(catchErrors(learnerAttendance.addLearnerToAttendance))
+
 /**
  * @swagger
  * /classroom/attendance/readOne/{id}:
@@ -583,4 +589,11 @@ router.route('/classroom/attendance/delete/:id').delete(validateObjectId,catchEr
  */
 router.route('/classroom/attendance/mark/:id').put(catchErrors(learnerAttendance.markLearnerAttendance))
 
+router.route('/classroom/attendance/transfer/:id').put(catchErrors(learnerAttendance.transferLearner))
+
+
+
+router.route('/classroom/assessment/create').post(catchErrors(assessmentController.createAssessment))
+router.route('/classroom/assessment/read').get(catchErrors(assessmentController.readAll))
+router.route('/classroom/assessment/outcome/:id').put(catchErrors(assessmentController.recordOutcome))
 module.exports = router

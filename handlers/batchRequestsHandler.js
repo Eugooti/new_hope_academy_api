@@ -8,7 +8,7 @@ const batchRequestsHandler = async (req, res) => {
     }
 
     const responses = [];
-
+    const token = req.cookies.authToken;  // Get the token from the cookies
 
     for (const request of requests) {
         const { method, url, data, headers } = request;
@@ -27,7 +27,10 @@ const batchRequestsHandler = async (req, res) => {
                 method: method.toLowerCase(),
                 url: `http://localhost:4600/nha${url}`, // Append baseURL
                 data,
-                headers,  // Pass the client headers to each individual request
+                headers: {
+                    ...headers,
+                    Cookie: `authToken=${token}`,  // Pass the token in the Cookie header
+                },  // Pass the client headers to each individual request
             });
 
             responses.push({ status: response.status, data: response.data });

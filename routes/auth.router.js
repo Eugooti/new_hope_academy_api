@@ -1,6 +1,7 @@
 const express = require('express')
 const authController = require('../controllers/authController/auth.controller')
 const {catchErrors} = require('../handlers/errorHandlers')
+const {refreshAccessToken} = require("../config/security/refreshToken");
 
 const router = express.Router()
 
@@ -99,6 +100,8 @@ router.route('/auth/login').post(catchErrors(authController.login))
 router.route('/auth/logout').get(catchErrors(authController.logout))
 
 router.route('/auth/updatePassword/:id').put(catchErrors(authController.updatePassword))
+
+router.route('/auth/refresh-token').post(catchErrors(refreshAccessToken))
 
 
 module.exports = router

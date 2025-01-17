@@ -21,36 +21,36 @@
 //
 // console.log(person[item]);
 
-const {formatDate} = require("./utils/formatDate");
-const roles = {
-    admin: ['manage_all'], // Full access to all operations
-    principal: [
-        'manage_school',
-        'make_policy',
-        'decision_making',
-        'manage_staff'
-    ],
-    vicePrincipal: [
-        'assist_principal',
-        'oversee_academics',
-        'oversee_discipline'
-    ],
-    administrativeStaff: [
-        'handle_clerical_tasks',
-        'manage_communication',
-        'schedule_activities',
-        'coordinate_school_activities'
-    ],
-
-    classTeacher: [
-        'mark_register',
-        'add_learner',
-        'manage_discipline',
-        'release_learner',
-        'view_class_timetable',
-        'borrow_books'
-    ]
-}
+// const {formatDate} = require("./utils/formatDate");
+// const roles = {
+//     admin: ['manage_all'], // Full access to all operations
+//     principal: [
+//         'manage_school',
+//         'make_policy',
+//         'decision_making',
+//         'manage_staff'
+//     ],
+//     vicePrincipal: [
+//         'assist_principal',
+//         'oversee_academics',
+//         'oversee_discipline'
+//     ],
+//     administrativeStaff: [
+//         'handle_clerical_tasks',
+//         'manage_communication',
+//         'schedule_activities',
+//         'coordinate_school_activities'
+//     ],
+//
+//     classTeacher: [
+//         'mark_register',
+//         'add_learner',
+//         'manage_discipline',
+//         'release_learner',
+//         'view_class_timetable',
+//         'borrow_books'
+//     ]
+// }
 
 // const userRole=["classTeacher","administrativeStaff"]
 // let aggregatedPrivileges = new Set();
@@ -82,6 +82,9 @@ const roles = {
 //     add+item.age,0
 // )
 //
+// console.log(total)
+
+//
 // const date = formatDate()
 //
 // console.log(date)
@@ -96,47 +99,166 @@ const roles = {
 
 
 
-// const trials = {
-//     name:"Eugene",
-//     age:20,
-//     money:1000,
-//     income:[
-//         {id:2,money:100,name:"EUR"},
-//         {id:5,money:100,name:"EUR"},
-//         {id:4,money:200,name:"EUR"},
-//         {id:3,money:30,name:"EUR"},
-//     ]
+const trials = {
+    name:"Eugene",
+    age:20,
+    money:1000,
+    income:[
+        {id:2,money:100,name:"EUR"},
+        {id:5,money:100,name:"EUR"},
+        {id:4,money:200,name:"EUR"},
+        {id:3,money:30,name:"EUR"},
+    ]
+}
+
+console.log(trials)
+
+const index = trials.income.findIndex(item=>item.id===2)
+
+trials.money -= trials.income[index].money
+
+trials.income.splice(index,1)
+
+console.log(trials)
+//
+// const add = (a,b) => {
+//   return `${a}${b}`;
+// }
+// const multiply = (a,b) => {
+//   return a * b;
 // }
 //
-// const index = trials.income.findIndex(item=>item.id===2)
+// const subtract = (a,b)=>{
+//     return a-b
+// }
 //
-// trials.money -= trials.income[index].money
+// const all = {
+//     add,
+//     multiply,
+//     subtract
+// }
 //
-// trials.income.splice(index,1)
+// const id = 112233
 //
-// console.log(trials)
+// console.log(all.add('/staff/read/',id))
+//
+// const name = "Eugene"
+//
+// console.log(name[0])
 
-const add = (a,b) => {
-  return `${a}${b}`;
-}
-const multiply = (a,b) => {
-  return a * b;
-}
+// const learners= [
+//     {
+//         name: 'Noelani Shaw',
+//         admNo: 6570,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     },
+//     {
+//         name: 'Rhea Reynolds',
+//         admNo: 6264,
+//         gender: 'Male',
+//     }
+// ]
 
-const subtract = (a,b)=>{
-    return a-b
-}
+// const isThere = learners.some(item=>6264 === item.admNo)
 
-const all = {
-    add,
-    multiply,
-    subtract
-}
-
-const id = 112233
-
-console.log(all.add('/staff/read/',id))
-
-const name = "Eugene"
-
-console.log(name[0])
+// console.log(isThere)

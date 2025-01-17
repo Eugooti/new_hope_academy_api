@@ -3,7 +3,7 @@ const {formatDate} = require("../../utils/formatDate");
 
 const reminder = new mongoose.Schema({
     event:{type:String,require:true},
-    time:{type:String,required:true},
+    description:{type:String,required:true},
     date:{type:String,required:true},
     createdAt:{type:String,required:true,default:formatDate}
 })

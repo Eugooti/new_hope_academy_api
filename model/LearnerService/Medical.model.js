@@ -11,10 +11,11 @@ const visitDetails = new mongoose.Schema({
 })
 
 const medicalRecordSchema = new mongoose.Schema({
-    admNo: { type: Number, required: true },
+    admNo:{type:String,required:true,unique:true},
     fullName:{type:String,required:true},
-    classroom:{type:Number,required:true},
+    gender:{type:String,required:true},
+    classroom:{type:String,required:true},
     visits:[visitDetails]
 });
 
-module.exports = mongoose.model("medicalRecord",medicalRecordSchema)
+module.exports = mongoose.model("MedicalRecord",medicalRecordSchema)

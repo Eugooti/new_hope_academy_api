@@ -26,7 +26,8 @@ const readById = async (model,req,res) => {
 
         return res.status(200).json({
             success:true,
-            result:result
+            result:result,
+            message:"Successfully found.",
         })
 
     }catch(err){
@@ -44,7 +45,7 @@ const readDataByLearnerAdmissionNumber = async (model,req,res)=>{
         return res.status(200).json({
             success:true,
             result:result,
-            message:"Learner data found"
+            message:"Learner data found."
         })
 
     }catch (error) {
@@ -64,7 +65,8 @@ const readDataByStaffEmployeeNumber = async (model,req,res) => {
 
         return res.status(200).json({
             success:true,
-            result
+            result,
+            message:'Staff Record found.'
         })
 
     }catch (error) {
@@ -86,7 +88,8 @@ const readByClassroomNo =async (model,req,res) => {
 
       return res.status(200).json({
           success:true,
-          result:result
+          result:result,
+          message:"Classroom record found."
       })
 
   }catch (error) {

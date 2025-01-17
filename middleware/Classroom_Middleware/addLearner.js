@@ -2,7 +2,7 @@ const { handleErrors, itemNotFound} = require("../../handlers/errorHandlers");
 
 const addLearner = async (model, req, res) => {
     try {
-        const { admNo, gender } = req.body;
+        const { admNo, gender, name } = req.body;
         const classroomNo = req.params.id;
 
         // Find the classroom by classroomNo
@@ -12,8 +12,11 @@ const addLearner = async (model, req, res) => {
             return itemNotFound(res,"Classroom")
         }
 
+        const learnerList = result.learners
+
         // Check if the learner already exists in the classroom
-        const findLearner = result.learners.some(learner => learner.admNo === admNo);
+        const findLearner = learnerList.some(learner => String(learner.admNo) === String(admNo));
+
 
         if (findLearner) {
             return res.status(200).json({
@@ -53,4 +56,46 @@ const addLearner = async (model, req, res) => {
     }
 };
 
-module.exports = { addLearner };
+const addLearnerToAttendance = async (model,req, res) => {
+    try {
+        const { admNo } = req.body;
+
+        const classroomNo = req.params.id;
+
+        console.log(classroomNo)
+
+        // Find the classroom by classroomNo
+        const result = await model.findOne({ classroomNo });
+
+        if (!result) {
+            return itemNotFound(res,"Classroom")
+        }
+
+        const findLearner = result.learners.some(learner => String(learner.admNo) === String(admNo));
+        if (findLearner) {
+            return res.status(200).json({
+                success: true,
+                message: "Learner already added."
+            });
+        }
+
+        result.learners.push(req.body);
+        result.markModified('attendanceRecord');
+
+        await result.save()
+
+        return res.status(200).json({
+            success: true,
+            message: 'Learner added successfully',
+            result: result,
+        });
+
+
+
+    }catch (error) {
+        console.log(error)
+        return handleErrors(res, error);
+    }
+}
+
+module.exports = { addLearner,addLearnerToAttendance };

@@ -10,8 +10,10 @@ const qualification = new mongoose.Schema({
 
 const vacancies = new mongoose.Schema({
     roleTitle:{type:String,required:true},
+    Department:{type:String,required:true},
     requirements:[requirement],
     qualifications:[qualification],
+    jobDescription:{type:String,required:true},
     salaryRange:{type:String,required:true}
 })
 
